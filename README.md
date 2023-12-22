@@ -1,9 +1,9 @@
 # Data-Structure-Project
-###   1. Error Handler :
+###   1. Error Handler 
 ####     ● Detecting MultiErrors in XML like missing closing tags or opening tags.
 ####     ● Correcting MultiErrors found in the previous point.
 
-###   2. Formatting (Prettifying) the XML:
+###   2. Formatting (Prettifying) the XML
 #####    ● The XML file should be well formatted by keeping the indentation for each level.
 #####    ● Adjust the indentation of an XML file, to make it more readable.
 #####    ● If the file is not consistent, user cannot format it.
