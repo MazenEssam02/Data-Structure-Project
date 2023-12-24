@@ -32,7 +32,5 @@ public class file {
         dataOS.writeByte(toByte);
         dataOS.close();
     }
-    public static void main(String[] args) {
-        System.out.println("sara");
-    }
+ 
 }
