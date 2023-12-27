@@ -29,6 +29,7 @@ for (int i =0 ; i<lines.length ; i++){
  {
     continue;
  }
+   lines[i] = lines[i].trim();
   if (lines[i].startsWith("</"))
   {
     n--;
