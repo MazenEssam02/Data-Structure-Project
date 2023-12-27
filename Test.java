@@ -38,7 +38,7 @@ public class Test {
         String s=obj.correction();
         resulttest= obj.validation();
         //check after correction
-        if((Integer)resulttest2[1]==-1 && (Integer)resulttest2[3]==-1){
+        if((Integer)resulttest[1]==-1 && (Integer)resulttest[3]==-1){
         System.out.println(resulttest[0]+" "+resulttest[1]+" "+resulttest[2]+" "+resulttest[3]);
         }
         // Output:-1 -1 -1 -1
