@@ -29,13 +29,18 @@ public class Test {
         Object [] resulttest=new Object[4];
         Object [] resulttest2=new Object[4];
         resulttest2= obj.validation();
-        //Check before correction
+        //Check before correction 
+        if((Integer)resulttest2[1]!=-1 && (Integer)resulttest2[3]!=-1){
         System.out.println("The Tag \""+resulttest2[0]+"\" in line ("+resulttest2[1] + ") isn't opened and the tag \""+ resulttest2[2]+"\" in line ("+resulttest2[3]+") isn't closed");
+        }
         //Output:The Tag "id" in line (2) isn't opened and the tag "name" in line (3) isn't closed
+        
         String s=obj.correction();
         resulttest= obj.validation();
         //check after correction
+        if((Integer)resulttest2[1]==-1 && (Integer)resulttest2[3]==-1){
         System.out.println(resulttest[0]+" "+resulttest[1]+" "+resulttest[2]+" "+resulttest[3]);
+        }
         // Output:-1 -1 -1 -1
 
 
