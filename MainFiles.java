@@ -4,8 +4,8 @@ public class MainFiles {
     private ArrayList<String>data= new ArrayList<String>();
     private String StringData;
 
-    private Stack<String> s1;
-    private Stack<String> s2;
+    private Stack<String> undo=new Stack<>();
+    private Stack<String> redo=new Stack<>();
     private static final int DATA_RANGE = 256;
     public MainFiles(ArrayList<String> data){
         this.data=data;
@@ -162,6 +162,7 @@ public class MainFiles {
     //Correct Errors in XML and return the corrected one in a String
     //----------------------------------------------------------
     public String correction(){
+        undo.push(this.StringData);
         ArrayList<String> corrected= new ArrayList<String>();
         int OpenLine = 0;
         int CloseLine=0;
@@ -208,11 +209,13 @@ public class MainFiles {
             }
         }
         this.StringData=ListToString(corrected);
+
         return this.StringData;
     }
     //----------------------------------------------------------
     public String Minify()
     {
+        undo.push(this.StringData);
         String s=this.StringData;
         String x = "";
         s=s.replaceAll(">\n",">");
@@ -224,12 +227,14 @@ public class MainFiles {
             }
         }
         this.StringData=x;
+
         return x;
     }
 
 
     //----------------------------------------------------------
     public  String Prettify(){
+        undo.push(this.StringData);
         String file=this.StringData;
         StringBuilder file_after_format= new StringBuilder();
 
@@ -241,31 +246,33 @@ public class MainFiles {
 //        }
         String[] lines = split_the_XML_file(file);
 
-        for (String line : lines) {
+        for (int i =0 ; i<lines.length ; i++) {
 
             // check the line is empty
 
-            if (line.trim().length() == 0) {
+            if (lines[i].trim().length() == 0) {
                 continue;
             }
-            if (line.startsWith("</")) {
+            lines[i] = lines[i].trim();
+            if (lines[i].startsWith("</")) {
                 n--;
                 String indent = generateIndentation(n);
-                file_after_format.append(indent).append(line).append("\n");
-            } else if (line.startsWith("<")) {
+                file_after_format.append(indent).append(lines[i]).append("\n");
+            } else if (lines[i].startsWith("<")) {
                 String indent = generateIndentation(n);
-                file_after_format.append(indent).append(line).append("\n");
+                file_after_format.append(indent).append(lines[i]).append("\n");
                 n++;
-            } else if (line.startsWith("<?")) {
-                file_after_format.append(line).append("\n");
+            } else if (lines[i].startsWith("<?")) {
+                file_after_format.append(lines[i]).append("\n");
             }
             // if the line is data
             else {
                 String indent = generateIndentation(n);
-                file_after_format.append(indent).append(line).append("\n");
+                file_after_format.append(indent).append(lines[i]).append("\n");
             }
         }
         this.StringData=file_after_format.toString();
+
         return  file_after_format.toString();
     }
     private  String[] split_the_XML_file(String File){
@@ -286,7 +293,34 @@ public class MainFiles {
         return indention.toString();
     }
 
+    public String Undo(){
 
+        if (undo.empty()){
+            return null;
+        }
+        else{
+            redo.push(this.StringData);
+            this.StringData=undo.peek();
+            undo.pop();
+            return this.StringData;
+        }
+
+    }
+    public String Redo(){
+
+        if (redo.empty()){
+
+            return  null;
+        }
+        else{
+
+            this.StringData=redo.peek();
+            undo.push(redo.peek());
+            redo.pop();
+            return this.StringData;
+        }
+
+    }
 
 
 }
