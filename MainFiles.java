@@ -62,7 +62,15 @@ public class MainFiles {
 
 
                     int i = f + 1;
-                    if (dataChars[i] != '/') {
+
+                     if (dataChars[i] == '?'){
+                        while (dataChars[i + 1] != '>') {
+                            i++;
+                        }
+                    }
+
+                    else if (dataChars[i] != '/' ) {
+
                         while (dataChars[i] != '>') {
 
                             open += dataChars[i];
@@ -74,11 +82,7 @@ public class MainFiles {
 
 
                     }
-                    else if (dataChars[i] == '?'){
-                          while (dataChars[i + 1] != '>') {
-                              continue;
-                          }
-                    }
+
                     else if (dataChars[i] == '/') {
                         while (dataChars[i + 1] != '>') {
 
