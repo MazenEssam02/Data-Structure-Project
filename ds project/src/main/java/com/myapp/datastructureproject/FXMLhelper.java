@@ -70,6 +70,22 @@ public class FXMLhelper {
     static void disable(Button btn1){
         btn1.setDisable(true);
     }
+        static boolean isValidID(String str, int n) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        // Check if all characters are digits
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        // Convert the string to an integer
+        int number = Integer.parseInt(str);
+        // Check if the number is within the specified range
+        return number > 0 && number <= n;
+    }
+
 }
 class Network_nodes{
     TextField u1;
