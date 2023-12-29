@@ -1,25 +1,29 @@
 package com.myapp.datastructureproject;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import com.myapp.datastructureproject.Compression_Decompression.Node;
+import java.util.*;
+
 public class MainFiles {
+    private static Node result;
+    private static final int DATA_RANGE = 256;
     private ArrayList<String>data;
     private String StringData;
+    private String SavedData;
 
     private Stack<String> undo=new Stack<>();
     private Stack<String> redo=new Stack<>();
-    private static final int DATA_RANGE = 256;
+
     public MainFiles(ArrayList<String> data){
         this.data=data;
         this.StringData=ListToString(data);
+        this.SavedData=ListToString(data);
     }
     public String getStringData(){
         return this.StringData;
     }
-    private String ListToString(ArrayList<String> s){
+    public String ListToString(ArrayList<String> s){
         return String.join("\n",s);
     }
-
 
     //----------------------------------------------------------
 
@@ -61,7 +65,15 @@ public class MainFiles {
 
 
                     int i = f + 1;
-                    if (dataChars[i] != '/') {
+
+                    if (dataChars[i] == '?'){
+                        while (dataChars[i + 1] != '>') {
+                            i++;
+                        }
+                    }
+
+                    else if (dataChars[i] != '/' ) {
+
                         while (dataChars[i] != '>') {
 
                             open += dataChars[i];
@@ -70,7 +82,10 @@ public class MainFiles {
                         closing = false;
                         OpenLineNumber.push(line);
                         d.push(open);
+
+
                     }
+
                     else if (dataChars[i] == '/') {
                         while (dataChars[i + 1] != '>') {
 
@@ -167,15 +182,14 @@ public class MainFiles {
         int CloseLine=0;
         String OTag="";
         String CTag="";
-        while (OpenLine !=-1 || CloseLine!=-1){
-            Object[] result = validation();
+        while (OpenLine !=-1 || CloseLine!=-1){//check if there is still errors or not
+            Object[] result = validation(); // call validation function every loop to check if there are Errors or nor
             OpenLine = (Integer) result[1];
 
             CloseLine = (Integer) result[3];
-            if (OpenLine == -1 && CloseLine==-1) {
-//                corrected=this.data;
+            if (OpenLine == -1 && CloseLine==-1) { // if there are no errors
                 this.StringData=ListToString(this.data);
-                return this.StringData ;
+                return this.StringData ; // return the given Data
 
             }
             else{
@@ -186,24 +200,24 @@ public class MainFiles {
 
                     for (String dd:this.data) {
 
-//                        if ((DataChar[f] == '\n') ){line++;}
-                        if(OpenLine==line) {
+
+                        if(OpenLine==line) { //if the current line is the Open tag missing line
                             OTag=(String) result[0];
-                            corrected.add(("<"+OTag+">"));
+                            corrected.add(("<"+OTag+">")); // add the missing tag before the closing tag
                             corrected.add(dd) ;
-                        } else if (CloseLine==line) {
+                        } else if (CloseLine==line) { //if the current is the close tag missing line
                             CTag=(String) result[2];
                             corrected.add(dd) ;
-                            corrected.add(("</"+CTag+">"));
-//                            System.out.println(corrected);
-                        } else {
+                            corrected.add(("</"+CTag+">")); // add the missing tag after the opening tag
+
+                        } else { // else continue adding the text
                             corrected.add(dd) ;
                         }
                         line++;
                     }
-                    this.data=new ArrayList<>(corrected);
+                    this.data=new ArrayList<>(corrected); //put the corrected in data to check on data on the next iteration in Validation
 
-//                    System.out.println(corrected);
+
                 }
             }
         }
@@ -399,7 +413,7 @@ public class MainFiles {
     // Minify XML file by removing spaces an new lines
     public String Minify() {
         undo.push(this.StringData);
-        String file=this.StringData;
+        String file=this.SavedData;
         StringBuilder file_after_minify= new StringBuilder();
         String[] lines = split_the_XML_file(file);
         for (int i =0 ; i<lines.length ; i++){
@@ -421,7 +435,7 @@ public class MainFiles {
     // Format XML File
     public  String Prettify(){
         undo.push(this.StringData);
-        String file=this.StringData;
+        String file=this.SavedData;
         StringBuilder file_after_format= new StringBuilder();
 
         int n=0;
@@ -510,6 +524,152 @@ public class MainFiles {
         }
 
     }
+    //----------------------------------------------------------
+    public String Compress()
+    {
+        undo.push(this.StringData);
+        char[] inChars = this.SavedData.toCharArray();
+        final int[] freq = new int[DATA_RANGE];
+        for (char inChar : inChars)
+            freq[inChar]++;
 
+// build Huffman Tree
+        final Node root = build_Huffman_Tree(freq);
+
+        final Map<Character,String> lookUpTable = buildTable(root);
+        result =root;
+        String encodedData= (generateEncodedData(this.SavedData,lookUpTable));
+
+        String Data=writeToFile(encodedData);
+        this.StringData=Data;
+        return Data;
+
+    }
+    //----------------------------------------------------------
+    private  String generateEncodedData(final String data,final Map<Character, String> lookUpTable) {
+        final StringBuilder sb = new StringBuilder();
+        for(final char character:data.toCharArray()){
+            sb.append(lookUpTable.get(character));
+        }
+        return sb.toString();
+
+    }
+    //----------------------------------------------------------
+    private Node build_Huffman_Tree(int[] freq) {
+        // using priority queue
+        PriorityQueue<Node> pqNodes = new PriorityQueue<>(256);
+
+        for (char c = 0; c < DATA_RANGE; c++){
+            if (freq[c] > 0)
+                pqNodes.add(new Node(c, freq[c], null, null));
+        }
+        while (pqNodes.size() > 1) {
+            final Node left = pqNodes.poll();
+            final Node right = pqNodes.poll();
+            final Node parent = new Node('\0', (left.getFrequency() + right.getFrequency()), left, right);
+            pqNodes.add(parent);
+        }
+        return pqNodes.poll();
+    }
+    //----------------------------------------------------------
+    private Map<Character,String> buildTable(final Node root){
+        final Map<Character,String> lookUpTable = new HashMap<>();
+        buildTablehelper(root,"",lookUpTable);
+        return lookUpTable;
+    }
+    //----------------------------------------------------------
+
+    private void buildTablehelper(Node node, String s, Map<Character, String> lookUpTable) {
+        if(!node.is_Leaf()){
+            buildTablehelper(node.getLeftNode(),s+'0',lookUpTable);
+            buildTablehelper(node.getRightNode(),s+'1',lookUpTable);
+        }else{
+            lookUpTable.put(node.getCharacter(),s);
+        }
+    }
+    //----------------------------------------------------------
+    //Decompress
+
+    public  String Decompress(){
+        undo.push(this.StringData);
+        String file_compressed=decode(this.StringData);
+        final StringBuilder resultBuilder = new StringBuilder();
+        Node current = result;
+        int i=0;
+        while(i<file_compressed.length()){
+            while(!current.is_Leaf()){
+                char bit = file_compressed.charAt(i);
+                if(bit=='1'){
+                    current=current.getRightNode();
+                }else if(bit=='0'){
+                    current=current.getLeftNode();
+                }
+                else{
+                    throw new IllegalArgumentException("invalid bit"+bit);
+                }
+                i++;
+            }
+            resultBuilder.append(current.getCharacter());
+            current =result;
+        }
+        this.StringData=resultBuilder.toString();
+        return resultBuilder.toString();
+    }
+    //----------------------------------------------------------
+    private  String writeToFile(String binary)  {
+
+        StringBuilder dataOS=new StringBuilder();
+        byte flag = 0;
+        byte toByte = 0;
+        byte count = 7;
+        byte remainder = (byte) (binary.length() % 8);
+        if (remainder != 0) {
+            flag = (byte) (8 - remainder);
+        }
+        dataOS.append((char)(flag));
+        for (int i = 0; i < binary.length(); i++) {
+            if (binary.charAt(i) == '1') {
+                toByte |= (1 << count);
+            }
+            if (count == 0) {
+//                System.out.println(toByte);
+                dataOS.append((char) (toByte));
+                toByte = 0;
+                count = 8;
+            }
+            count--;
+        }
+        dataOS.append((char)(toByte));
+        return dataOS.toString();
+    }
+    //----------------------------------------------------------
+    private String decode(String encode)  {
+
+
+        StringBuilder decoded = new StringBuilder();
+
+        char[] read = encode.toCharArray();
+
+        char flag = read[0];
+        for (int i = 1; i < read.length; i++) {
+            decoded.append(charToBinaryString(read[i]));
+        }
+        if (flag != 0) {
+
+            decoded.delete(decoded.length() - flag, decoded.length());
+        }
+        return decoded.toString();
+    }
+    //----------------------------------------------------------
+    private  String charToBinaryString(char c) {
+        StringBuilder result = new StringBuilder();
+        String binary = Integer.toBinaryString(c & 0xFF);
+        for (int i = 0; i < (8 - binary.length()); i++) {
+            result.append('0');
+        }
+        result.append(binary);
+        return result.toString();
+    }
+    //----------------------------------------------------------
 
 }
