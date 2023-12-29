@@ -576,9 +576,9 @@ public class MainFiles {
         }
     }
     //----------------------------------------------------------
-    //decompress
+    //Decompress
 
-    public  String decompress(){
+    public  String Decompress(){
         undo.push(this.StringData);
         String file_compressed=decode(this.StringData);
         final StringBuilder resultBuilder = new StringBuilder();
