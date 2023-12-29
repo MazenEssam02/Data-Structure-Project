@@ -8,7 +8,7 @@ class User {
 
     @Override
     public String toString() {
-        return this.ID;
+        return "user: "+ this.name +" - "+"ID: " +this.getID();
     }
     public void print() {
         System.out.println("User ID is: " + ID);
