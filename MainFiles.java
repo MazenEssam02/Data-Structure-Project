@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class MainFiles {
-    private Node result;
+    private static Node result;
     private static final int DATA_RANGE = 256;
     private ArrayList<String>data;
     private String StringData;
@@ -73,6 +73,11 @@ public class MainFiles {
                         d.push(open);
 
 //
+                    }
+                    else if (dataChars[i] == '?'){
+                          while (dataChars[i + 1] != '>') {
+                              continue;
+                          }
                     }
                     else if (dataChars[i] == '/') {
                         while (dataChars[i + 1] != '>') {
