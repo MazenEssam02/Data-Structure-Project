@@ -14,7 +14,7 @@ public class FXmain extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FXmain.class.getResource("main_scene.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("I did it *-*");
+        stage.setTitle("XML Editor");
         stage.setScene(scene);
         stage.show();
     }
