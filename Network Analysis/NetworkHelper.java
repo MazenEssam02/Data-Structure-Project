@@ -3,7 +3,38 @@ import java.util.ArrayList;
 
 public class NetworkHelper {
     private User [] users ;
- 
+
+ public NetworkHelper(String multilineInput){
+        HandleXML handleXML =new HandleXML();
+        ArrayList<String> linesList = HandleXML.convertToArrayList(multilineInput);
+
+        // Print the result
+        for (int i =0;i<linesList.size() ;i++) {
+            linesList.set(i,linesList.get(i).trim());
+
+            //System.out.println(linesList.get(i).trim());
+        }
+
+        this.users = handleXML.getUsers(linesList);
+
+    }
+
+
+
+
+ public  Graph CreateNetwork(){
+        MapF userIndexMapF = createUserIndexMap();
+Graph graph = new Graph(users.length);
+        for(int i =0;i<users.length;i++){
+           for(int j=0;j<users[i].Followers.size();j++){
+               int index = userIndexMapF.get(users[i].Followers.get(j));
+               graph.addEdge(i,index);
+           }
+        }
+return graph;
+}
+
+    
     public  String search(String word){
         boolean found = false;
         String result = "";
@@ -60,5 +91,32 @@ public class NetworkHelper {
         }
 return users[index];
 }
+
+
+public User[][] suggest(){
+
+        Graph graph= this.CreateNetwork();
+
+        User[][] suggestionUser =new User[graph.getVertices()][];
+        for(int i=0 ;i<graph.getVertices();i++){
+            ArrayList<Integer> followersOfFollowers = new ArrayList<>();
+            for(int j=0;j<graph.getVertices();j++){
+                if(graph.isConnected(i,j)){
+                    for(int k=0;k<graph.getVertices();k++){
+                        if((!graph.isConnected(i,k))&& graph.isConnected(j,k) && i!=k){
+                            followersOfFollowers.add(k);}}}}
+
+            suggestionUser[i]= new User[followersOfFollowers.size()];
+            for (int j = 0; j < followersOfFollowers.size(); j++) {
+                // Note: Assuming you have a way to create User objects from IDs
+                suggestionUser[i][j] =users[followersOfFollowers.get(j)];
+            }
+
+        }
+
+return suggestionUser;   }
+
+
+    
     
 }
