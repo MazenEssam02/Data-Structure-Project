@@ -423,7 +423,7 @@ public class MainFiles {
     // Format XML File
     public  String Prettify(){
         undo.push(this.StringData);
-        String file=this.StringData;
+        String file=this.SavedData;
         StringBuilder file_after_format= new StringBuilder();
 
         int n=0;
