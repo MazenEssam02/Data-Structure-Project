@@ -13,29 +13,27 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class FXMLhelper {
-    static Graph<String, String> build_sample_digraph(User []users,com.myapp.datastructureproject.networkAnalysis.Graph graph) {
+    static Graph<String, String> build_sample_digraph(User[] users, com.myapp.datastructureproject.networkAnalysis.Graph graph) {
 
         Digraph<String, String> g = new DigraphEdgeList<>();
 
 
-        for (User u : users){
+        for (User u : users) {
             g.insertVertex(u.getID());
         }
-        for (int i = 0; i < users.length; i++)
-        {
-            for (int j = 0; j < users.length; j++)
-            {
-                if(graph.isConnected(i,j)){
-                    g.insertEdge(users[j].getID(),users[i].getID(),users[j].getID()+users[i].getID());
+        for (int i = 0; i < users.length; i++) {
+            for (int j = 0; j < users.length; j++) {
+                if (graph.isConnected(i, j)) {
+                    g.insertEdge(users[j].getID(), users[i].getID(), users[j].getID() + users[i].getID());
                 }
             }
         }
 
         return g;
     }
+
     //helper method store string to specified file
     static void saveTextToFile(String content, File file) {
         try {
@@ -51,41 +49,38 @@ public class FXMLhelper {
         // Convert the array to an ArrayList:
         return new ArrayList<>(Arrays.asList(lines));
     }
-    static String isValid(MainFiles obj){
-        Object [] resulttest;
+    static String isValid(MainFiles obj) {
+        Object[] resulttest;
         resulttest = obj.validation();
         StringBuilder s = new StringBuilder("");
         //Check before correction
-        if((Integer)resulttest[1]!=-1 ){
-            s.append("The Tag \"" + resulttest[0]+"\" in line ("+resulttest[1] + ") isn't opened\n");
+        if ((Integer) resulttest[1] != -1) {
+            s.append("The Tag \"" + resulttest[0] + "\" in line (" + resulttest[1] + ") isn't opened\n");
         }
-        if((Integer)resulttest[3]!=-1){
-            s.append("The Tag \"" +resulttest[2]+"\" in line ("+resulttest[3] +") isn't closed");
+        if ((Integer) resulttest[3] != -1) {
+            s.append("The Tag \"" + resulttest[2] + "\" in line (" + resulttest[3] + ") isn't closed");
         }
         return s.toString();
     }
-    static void enable(Button btn1){
+    static void enable(Node btn1) {
         btn1.setDisable(false);
     }
-    static void disable(Button btn1){
+
+    static void disable(Node btn1) {
         btn1.setDisable(true);
     }
-        static boolean isValidID(String str, int n) {
+
+    static boolean isValidID(String str, User[] users) {
         if (str == null || str.isEmpty()) {
             return false;
         }
         // Check if all characters are digits
-        for (char c : str.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
+        for (User u :  users) {
+            if(u.getID().equals(str))
+                return true;
         }
-        // Convert the string to an integer
-        int number = Integer.parseInt(str);
-        // Check if the number is within the specified range
-        return number > 0 && number <= n;
+        return false;
     }
-
 }
 class Network_nodes{
     TextField u1;
