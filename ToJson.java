@@ -75,4 +75,105 @@ class ToJson {
                         }
                         brackets.push("}");     //add closing curly bracket for the one we added
                     }
-                    
+                    //for formating
+                    for (int t = brackets.size() + 1; t > 0; t--) {
+                        json += " ";
+                        j += 1;
+                    }
+                    json += "\"";
+                    j++;
+                    json += word;
+                    j += word.length();     //write tag name in json file
+                    json += "\": ";
+                    j += 3;
+                    stack_open_tags.push(word);     //store the opened tag in the stack
+                    tag.push(word);
+                    i++;
+                    opening_tag.push(true);     //we have opened new tag
+                } else {                        //if it is closing tag
+                    while (!w.equals(">")) {    //store the closing tag in word
+                        i++;
+                        w = s.substring(i, i + 1);
+                        word += w;
+                    }
+                    word = word.substring(0, word.length() - 1);    //to remove the > from the end of the word
+                    //opening tags are pushed into tag*stack* and poped when they are closed
+                    //before poping they are stored in tags*string*
+                    //if opening tag is repeated after the closing tag, it will be deleted from json*string*
+                    if (word.equals(tag.peek())) {  //check the last tag
+                        last_closed_tag = word;     //store the last closed tag
+                        tag.pop();                  //pop the tag that is closed
+
+                        // //"topic", x=90->", topics length = count = 6,
+                        int count = last_closed_tag.length();
+                        String currentWord;
+                        currentWord = json.substring(x + 1, x + 2);
+                        //currentWord = t
+
+                        //if scope of topics ended without repeating topic, remove index of topic.
+                        for (int L = x + 2; L < x + count; L++) {
+                            currentWord += json.substring(L, L + 1); //topic
+                        }
+
+                        //topic + s == topics
+                        if ((currentWord + "s") .equals(last_closed_tag)) {
+                            //pop 90
+                            ind.pop();
+                            //x = index of post
+                            if (!ind.isEmpty()) {
+                                x = ind.peek();
+                            }
+                        }
+                    }
+                    //print closing brackets
+                    if (opening_tag.peek() == false) {
+                        String back;
+                        back = json.substring(json.length() - 1);
+
+                        //removing unwanted commas
+                        if ((brackets.peek().equals("]") && bracket.equals("}")) ||
+                                (brackets.peek().equals("}") && back.equals(",")) ||
+                                (brackets.peek().equals("]") && back.equals(","))) { //brackets.top()-> barcket to be printed, bracket->last printed bracket
+                            json = json.substring(0, json.length() - 1);
+                            j--;
+                        }
+                        json += "\n";
+                        j += 1;
+                        for (int t = brackets.size(); t > 0; t--) {
+                            json += " ";
+                            j += 1;
+                        }
+                        json += brackets.peek();
+                        bracket = brackets.peek();
+                        j++;
+                        brackets.pop();
+                        if (!brackets.isEmpty()) {
+                            json += ",";
+                            j++;
+                        }
+                    }
+                    i++;
+                    opening_tag.push(false);    //last opened tag is closed
+                }
+            }
+            //data to be printed char by char so no need for word here
+            else {
+                json += "\"";
+                j++;
+                while (!w.equals("<")) {    //add the data to the json until find an opening tag
+                    json += w;
+                    j++;
+                    i++;
+                    w = s.substring(i, i + 1);
+                }
+                json += "\"";   //close the data field
+                json += ",";    // add another
+                j += 2;
+            }
+            word = "";
+        }
+        json += "\n}";  //closing json string
+        j += 2;
+
+        return json;
+    }
