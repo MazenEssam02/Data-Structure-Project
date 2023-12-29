@@ -21,6 +21,14 @@ class ToJson {
             if (w.equals("<")) {        //if it's a tag
                 i++;
                 w = s.substring(i, i + 1);
+                if(w.equals("?")||w.equals("!")){    //if it is xml header ignore
+                    while (!w.equals(">")) {
+                        i++;
+                        w = s.substring(i, i + 1);
+                    }
+                    i++;
+                    continue;
+                }
                 if (!w.equals("/")) {           //if it is opening tag
                     while (!w.equals(">")) {    //store this tag in word
                         word += w;
