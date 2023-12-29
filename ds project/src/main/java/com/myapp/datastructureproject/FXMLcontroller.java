@@ -11,6 +11,7 @@ import com.brunomnsilva.smartgraph.containers.SmartGraphDemoContainer;
 import com.brunomnsilva.smartgraph.graph.Graph;
 import com.brunomnsilva.smartgraph.graphview.*;
 
+import com.myapp.datastructureproject.networkAnalysis.MapF;
 import com.myapp.datastructureproject.networkAnalysis.NetworkHelper;
 import com.myapp.datastructureproject.networkAnalysis.User;
 
@@ -82,7 +83,9 @@ public class FXMLcontroller {
     Operation_nodes operation_nodes;
     NetworkHelper networkHelper;
     com.myapp.datastructureproject.networkAnalysis.Graph graph;
-    User []users;
+    User [] users_list;
+    MapF users_map;
+    User [][] users_suggest;
     MainFiles content;
 
     @FXML
@@ -236,7 +239,9 @@ public class FXMLcontroller {
         try {
             networkHelper = new NetworkHelper(fixed_text_area.getText());
             graph = networkHelper.CreateNetwork();
-            users = networkHelper.getUsers();
+            users_list = networkHelper.getUsers();
+            users_suggest = networkHelper.suggest();
+            users_map = networkHelper.createUserIndexMap();
             network_nodes.enable(true);
         }catch (Exception e){
         }
@@ -245,7 +250,7 @@ public class FXMLcontroller {
     //on action of visualize button
     public void visualize(ActionEvent ev){
 
-        Graph<String, String> g = FXMLhelper.build_sample_digraph(users,graph);
+        Graph<String, String> g = FXMLhelper.build_sample_digraph(users_list,graph);
         System.out.println(g);
         SmartPlacementStrategy strategy = new SmartCircularSortedPlacementStrategy();
 //        SmartPlacementStrategy strategy = new SmartRandomPlacementStrategy();
@@ -306,9 +311,16 @@ public class FXMLcontroller {
     //------------------------------------------------------------------------------
     //on action of suggest button
     public void suggest(ActionEvent ev){
-        view_operation.setText("suggest");
+        String u = user_s.getText().replaceAll("\\s", "");
+        if(FXMLhelper.isValidID(u, users_list.length)) {
+            int user_index = users_map.get(u);
+            view_operation.setText("for" + users_list[user_index].toString() + "\nsuggested: " + Arrays.toString(users_suggest[user_index]));
+        }
+        else {
+            Alarm.setContentText("Please enter a valid ID!");
+            Alarm.show();
+        }
     }
-
 }
 
 
