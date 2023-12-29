@@ -22,3 +22,8 @@
 #####    4-Remove these two minimum frequencies from Q and add the sum into the list of frequencies 
 #####    5-Insert node p into the tree.
 #####    6-Repeat steps utill build Tree.
+###   6. Converting XML to JSON
+####     ●This function takes an XML string as input and converts it into #### a JSON-formatted string. It does so by parsing through the XML string #### character by character, identifying tags, and constructing the 
+#### equivalent JSON structure.
+###   7.Post Search 
+####     ●given a specific word or topic, we can get the posts where this #### word or topic was mentioned.
