@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.datastructureproject.FXMLcontroller">
+   <right>
+      <VBox alignment="CENTER" prefHeight="278.0" prefWidth="128.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="undo_btn" mnemonicParsing="false" onAction="#undo" text="undo" />
+            <Button fx:id="redo_btn" mnemonicParsing="false" onAction="#redo" text="redo" />
+            <Button fx:id="check_btn" mnemonicParsing="false" onAction="#check" prefHeight="26.0" prefWidth="110.0" text="Check" />
+            <Button fx:id="correct_btn" mnemonicParsing="false" onAction="#correct" prefWidth="110.0" text="correct" />
+            <Button fx:id="pretify_btn" mnemonicParsing="false" onAction="#prettify" prefWidth="110.0" text="Prettify" />
+            <Button fx:id="json_btn" mnemonicParsing="false" onAction="#tojson" prefWidth="110.0" text="To Json" />
+            <Button fx:id="minify_btn" mnemonicParsing="false" onAction="#minify" prefWidth="110.0" text="Minify" />
+            <Button fx:id="compress_btn" mnemonicParsing="false" onAction="#compress" prefWidth="110.0" text="Compress" />
+            <Button fx:id="decompress_btn" mnemonicParsing="false" onAction="#decompress" prefWidth="110.0" text="Decompress" />
+            <Button fx:id="analyse_btn" mnemonicParsing="false" onAction="#analyse" prefWidth="110.0" text="analyse_network" />
+            <Button fx:id="visualize_btn" mnemonicParsing="false" onAction="#visualize" prefWidth="110.0" text="visualize_network" />
+            <Button fx:id="find_most_active_btn" mnemonicParsing="false" onAction="#most_active" prefWidth="110.0" text="Most active" />
+            <Button fx:id="find_most_followd_btn" maxWidth="-Infinity" mnemonicParsing="false" onAction="#most_followed" prefWidth="110.0" text="Most followed" />
+         </children>
+      </VBox>
+   </right>
+   <bottom>
+      <GridPane hgap="10.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="0.0" prefWidth="290.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="0.0" prefWidth="290.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="0.0" prefWidth="290.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="u2" promptText="User2 ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="u1" promptText=" User1 ID" GridPane.columnIndex="1" />
+            <Button fx:id="find_mutual_btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Find_mutual" text="Find mutual friends" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveas" text="Save as" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="topic" promptText="Word or Topic" GridPane.columnIndex="2" />
+            <Button fx:id="search_btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#search" text="Search" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="suggest_btn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#suggest" text="Suggest Who to follow" GridPane.rowIndex="1" />
+            <TextField fx:id="user_s" promptText="User ID" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </GridPane>
+   </bottom>
+   <center>
+      <GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="280.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="303.0000129699707" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextArea fx:id="view_operation" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="380.00001373291013" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextArea fx:id="fixed_text_area" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" />
+                  <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                           <children>
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Browse" text="browse" />
+                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#open" text="open" />
+                           </children>
+                        </VBox>
+                        <TextField fx:id="path" />
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </center>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</BorderPane>
