@@ -43,7 +43,9 @@ Graph graph = new Graph(users.length);
         }
 return graph;
 }
-
+public User[] getUsers() {
+        return users;
+    }
     
     public  String search(String word){
         boolean found = false;
@@ -128,7 +130,7 @@ return suggestionUser;   }
 
 
 
-        public  User[] mutualFollowers(String ID1 , String ID2 ){
+public  User[] mutualFollowers(String ID1 , String ID2 ){
     MapF mapF = createUserIndexMap();
     Graph graph = CreateNetwork();
     int user1 = mapF.get(ID1);
@@ -162,6 +164,18 @@ int [] notMutual = new int[users.length];
 
  return mutualUsers;
         }
+    
+public User mostFollowed() {
+    int maxFollowers = users[0].Followers.size();
+    int index = 0;
+    for (int i = 1; i < users.length; i++) {
+        if (maxFollowers < users[i].Followers.size()) {
+            maxFollowers = users[i].Followers.size();
+            index = i;
+        }
+
+    }
+    return users[index];}
 
     
     
