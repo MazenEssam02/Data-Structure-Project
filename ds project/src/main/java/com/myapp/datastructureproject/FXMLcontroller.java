@@ -355,7 +355,7 @@ public class FXMLcontroller {
         String u = user_s.getText().replaceAll("\\s", "");
         if(FXMLhelper.isValidID(u, users_list)) {
             int user_index = users_map.get(u);
-            view_operation.setText("for" + users_list[user_index].toString() + "\nsuggested: " + Arrays.toString(users_suggest[user_index]));
+            view_operation.setText("for " + users_list[user_index].toString() + "\nsuggested: " + Arrays.toString(users_suggest[user_index]));
         }
         else {
             Alarm.setContentText("Please enter a valid ID!");
