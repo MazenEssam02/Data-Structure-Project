@@ -200,12 +200,12 @@ public class MainFiles {
 
                         if(OpenLine==line) { //if the current line is the Open tag missing line
                             OTag=(String) result[0];
-                            corrected.add(("<"+OTag+">")); // add the missing tag before the closing tag
-                            corrected.add(dd) ;
+                            corrected.add(("<"+OTag+">")+dd); // add the missing tag before the closing tag
+//                            corrected.add(dd) ;
                         } else if (CloseLine==line) { //if the current is the close tag missing line
                             CTag=(String) result[2];
-                            corrected.add(dd) ;
-                            corrected.add(("</"+CTag+">")); // add the missing tag after the opening tag
+//                            corrected.add(dd) ;
+                            corrected.add(dd+("</"+CTag+">")); // add the missing tag after the opening tag
 
                         } else { // else continue adding the text
                             corrected.add(dd) ;
