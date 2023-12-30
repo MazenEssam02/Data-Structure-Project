@@ -187,21 +187,26 @@ public class FXMLcontroller {
     //------------------------------------------------------------------------------
     //on action of check button
     public void check(ActionEvent ev) {
-        ArrayList<String> data = FXMLhelper.splitMultilineString(fixed_text_area.getText());
-        if (fixed_text_area.getText().length() == 0)
-            return;
-        content = new MainFiles(data);
-        String valid = FXMLhelper.isValid(content);
-        if(valid.length() == 0) {
-            view_operation.setText("The xml file has no missing tags");
-            operation_nodes.enable(true);
-            FXMLhelper.disable(check_btn);
+        try{
+            ArrayList<String> data = FXMLhelper.splitMultilineString(fixed_text_area.getText());
+            if (fixed_text_area.getText().length() == 0)
+                return;
+            content = new MainFiles(data);
+            String valid = FXMLhelper.isValid(content);
+            if(valid.length() == 0) {
+                view_operation.setText("The xml file has no missing tags");
+                operation_nodes.enable(true);
+                FXMLhelper.disable(check_btn);
+            }
+            else{
+                view_operation.setText(valid);
+                FXMLhelper.enable(correct_btn);
+            }
+            FXMLhelper.disable(compressed_mode);
+        }catch (Exception e){
+
         }
-        else{
-            view_operation.setText(valid);
-            FXMLhelper.enable(correct_btn);
-        }
-        FXMLhelper.disable(compressed_mode);
+
     }
     //------------------------------------------------------------------------------
     //on action of correct button
@@ -236,7 +241,12 @@ public class FXMLcontroller {
     //------------------------------------------------------------------------------
     //on action of decompress button
     public void decompress(ActionEvent ev) {
-        view_operation.setText(content.Decompress());
+        try {
+            view_operation.setText(content.Decompress());
+        }
+        catch (Exception e){
+
+        }
     }
     //on action of undo button
     public void undo(ActionEvent ev) {
