@@ -26,7 +26,73 @@ class HandleXML {
     String usersClose = "</users>";
 
 
-    public User[] getUsers(ArrayList<String> LinesNoSpace) {
+
+    public static ArrayList<String> concatenateLinesForID(ArrayList<String> linesNoSpace) {
+        ArrayList<String> modifiedLines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder();
+        boolean isIdTagOpen = false;
+
+        for (String line : linesNoSpace) {
+            if (line.contains("<id>")) {
+                isIdTagOpen = true;
+            }
+
+            if (isIdTagOpen) {
+                currentLine.append(line);
+                if (line.contains("</id>")) {
+                    isIdTagOpen = false;
+                    modifiedLines.add(currentLine.toString());
+                    currentLine.setLength(0); // Clear StringBuilder for the next line
+                }
+            } else {
+                modifiedLines.add(line);
+            }
+        }
+
+      //  System.out.println(modifiedLines);
+        return modifiedLines;
+    }
+
+
+
+    public static ArrayList<String> concatenateLinesForName(ArrayList<String> linesNoSpace) {
+        ArrayList<String> modifiedLines = new ArrayList<>();
+        StringBuilder currentLine = new StringBuilder();
+        boolean isNameTagOpen = false;
+
+        for (String line : linesNoSpace) {
+            if (line.contains("<name>")) {
+                isNameTagOpen = true;
+            }
+
+            if (isNameTagOpen) {
+                currentLine.append(line);
+                if (line.contains("</name>")) {
+                    isNameTagOpen = false;
+                    modifiedLines.add(currentLine.toString());
+                    currentLine.setLength(0); // Clear StringBuilder for the next line
+                }
+            } else {
+                modifiedLines.add(line);
+            }
+        }
+
+   //     System.out.println(modifiedLines);
+        return modifiedLines;
+    }
+
+
+
+
+
+
+
+
+    public User[] getUsers(ArrayList<String> modifiedLines) {
+
+        ArrayList<String> modifiedLines_2 = concatenateLinesForID(modifiedLines);
+        ArrayList<String> LinesNoSpace = concatenateLinesForName(modifiedLines_2);
+
         char[] LineChar;
         boolean isFollower = false;
         int NoUser = 0;
@@ -64,9 +130,9 @@ class HandleXML {
 
                 }
                 if (isFollower) {
-                    users[indexUser].Followers.add(data);
+                    users[indexUser].Followers.add(data.trim());
                 } else {
-                    users[indexUser].ID = data;
+                    users[indexUser].ID = data.trim();
                 }
             }
 
@@ -82,9 +148,9 @@ class HandleXML {
                     }
                 }
                 if (isFollower) {
-                    users[indexUser].Followers.add(data);
+                    users[indexUser].Followers.add(data.trim());
                 } else {
-                    users[indexUser].ID = data;
+                    users[indexUser].ID = data.trim();
                 }
             }
 
@@ -120,7 +186,7 @@ class HandleXML {
                 }
 
 
-                    users[indexUser].name = data ;
+                users[indexUser].name = data ;
 
             }
 
