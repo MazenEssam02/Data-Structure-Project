@@ -1,5 +1,4 @@
 package com.myapp.datastructureproject.networkAnalysis;
-
 import java.util.ArrayList;
 
 class HandleXML {
@@ -51,12 +50,33 @@ class HandleXML {
                 users[indexUser] = new User();
                 isFollower = false;
             }
+
+
             if (s.contains(IDOpen)) {
                 int index = s.indexOf(">");
                 for (index++; index < s.length(); index++) {
-                    if (LineChar[index] == '\0') {
+                    if (LineChar[index] == '\0' ) {
                         continue;
-                    } else if (LineChar[index] == '<') {
+                    } else if (LineChar[index] == '<'||LineChar[index] == '\n') {
+                        break;
+                    } else {
+
+                        data += LineChar[index];}
+
+                }
+                if (isFollower) {
+                    users[indexUser].Followers.add(data);
+                } else {
+                    users[indexUser].ID = data;
+                }
+            }
+
+            if (s.contains(IDClose)) {
+                int index = s.indexOf("<");
+                for (index--; index >=0; index--) {
+                    if (LineChar[index] == ' ' ) {
+                        continue;
+                    } else if (LineChar[index] == '>') {
                         break;
                     } else {
                         data += LineChar[index];
@@ -68,6 +88,11 @@ class HandleXML {
                     users[indexUser].ID = data;
                 }
             }
+
+
+
+
+
 
             if (s.contains(nameOpen)) {
                 int index = s.indexOf(">");
@@ -83,6 +108,28 @@ class HandleXML {
                 }
                 users[indexUser].name = data;
             }
+
+
+            if (s.contains(nameClose)) {
+
+                for (int index=0; index <s.indexOf("<"); index++) {
+                    if (LineChar[index] == '>') {
+                        break;
+                    } else {
+                        data += LineChar[index];
+                    }
+                }
+
+
+                users[indexUser].name = data ;
+
+            }
+
+
+
+
+
+
             if (s.contains(followerOpen)) {
                 isFollower = true;
             }
@@ -160,5 +207,4 @@ class HandleXML {
 
         return result;
     }
-
 }

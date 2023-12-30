@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,14 +11,16 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.datastructureproject.FXMLcontroller">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.myapp.datastructureproject.FXMLcontroller">
    <right>
-      <VBox alignment="CENTER" prefHeight="278.0" prefWidth="128.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="278.0" prefWidth="128.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="undo_btn" mnemonicParsing="false" onAction="#undo" text="undo" />
             <Button fx:id="redo_btn" mnemonicParsing="false" onAction="#redo" text="redo" />
+            <RadioButton fx:id="compressed_mode" mnemonicParsing="false" text="Compressed" />
             <Button fx:id="check_btn" mnemonicParsing="false" onAction="#check" prefHeight="26.0" prefWidth="110.0" text="Check" />
             <Button fx:id="correct_btn" mnemonicParsing="false" onAction="#correct" prefWidth="110.0" text="correct" />
+            <Button fx:id="save_btn" mnemonicParsing="false" onAction="#save" prefWidth="110.0" text="Save" />
             <Button fx:id="pretify_btn" mnemonicParsing="false" onAction="#prettify" prefWidth="110.0" text="Prettify" />
             <Button fx:id="json_btn" mnemonicParsing="false" onAction="#tojson" prefWidth="110.0" text="To Json" />
             <Button fx:id="minify_btn" mnemonicParsing="false" onAction="#minify" prefWidth="110.0" text="Minify" />
@@ -77,7 +80,7 @@
                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextArea fx:id="fixed_text_area" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" />
+                  <TextArea fx:id="fixed_text_area" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" promptText=" XML file content" />
                   <GridPane hgap="5.0" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="300.0" />
