@@ -329,7 +329,7 @@ public class FXMLcontroller {
             Alarm.show();
         }
         else{
-            view_operation.setText(Arrays.toString(networkHelper.mutualFollowers(user1,user2)));
+            view_operation.setText(String.valueOf(networkHelper.mutualFollowers(user1,user2)));
         }
     }
     //------------------------------------------------------------------------------

@@ -100,8 +100,8 @@ public class Main {
         System.out.println(user.toString());
         MapF map = networkHelper.createUserIndexMap();
         System.out.println("Map size is : " + map.getSize() +" and the index of the ID= 2 (for example) is : "+map.get("2"));
-       User[] mutualUsers =  networkHelper.mutualFollowers("3","2");
-        System.out.println(Arrays.toString(mutualUsers));
+//       User[] mutualUsers =  networkHelper.mutualFollowers("3","2");
+//        System.out.println(Arrays.toString(mutualUsers));
         System.out.println(networkHelper.search("elit") );
 
     }

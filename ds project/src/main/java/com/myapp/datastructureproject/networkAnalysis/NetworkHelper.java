@@ -111,39 +111,23 @@ public class NetworkHelper {
 return users[index];
 }
 
-    public  User[] mutualFollowers(String ID1 , String ID2 ){
-    MapF mapF = createUserIndexMap();
-    Graph graph = CreateNetwork();
-    int user1 = mapF.get(ID1);
-    int user2 = mapF.get(ID2);
-int [] notMutual = new int[users.length];
+    public  ArrayList<User> mutualFollowers(String ID1 , String ID2 ){
+        MapF mapF = createUserIndexMap();
+        Graph graph = CreateNetwork();
+        int user1 = mapF.get(ID1);
+        int user2 = mapF.get(ID2);
+//        int [] notMutual = new int[users.length];
 
-    for(int i=0;i<users.length;i++){
-         if(!(graph.isConnected(user1,i) && graph.isConnected(user2,i))){
-             notMutual[i]=1;
-         }
-    }
-    int counter = 0 ;
+        ArrayList<User> mutualUsers=new ArrayList<>();
 
-    for(int i=0;i<users.length;i++){
-        if(notMutual[i] != 1){ counter++;
+        for(int i=0;i<users.length;i++){
+            if((graph.isConnected(user1,i) && graph.isConnected(user2,i))){
+                mutualUsers.add(users[i]);
+            }
         }
-    }
-    User[] mutualUsers = new User[counter];
 
-    int j =0;
-    for(int i=0;i<users.length;i++){
-         if(notMutual[i] != 1){
-             mutualUsers[j]=users[i];
-             j++;
-         }
-    }
-
-
-
-
-
- return mutualUsers;}
+        return mutualUsers;
+}
 
     public  Graph CreateNetwork(){
         MapF userIndexMapF = createUserIndexMap();
