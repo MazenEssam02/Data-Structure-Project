@@ -115,7 +115,7 @@ public User[][] suggest(){
             for(int j=0;j<graph.getVertices();j++){
                 if(graph.isConnected(i,j)){
                     for(int k=0;k<graph.getVertices();k++){
-                        if((!graph.isConnected(i,k))&& graph.isConnected(j,k) && i!=k){
+                        if((!graph.isConnected(i,k))&& graph.isConnected(j,k) && i!=k && !followersOfFollowers.contains(k)){
                             followersOfFollowers.add(k);}}}}
 
             suggestionUser[i]= new User[followersOfFollowers.size()];
