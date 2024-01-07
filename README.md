@@ -26,12 +26,12 @@
    - This function takes an XML string as input and converts it into  a JSON-formatted string. It does so by parsing through the XML string  character by character, identifying tags, and constructing the  equivalent JSON structure.
 ###  7. Network Analysis:
 #### We use this analysis to extract important data like:
--  who is the most influencer user (has the most followers)
--  who is the most active user (connected to lots of users)
--  the mutual followers between 2 users
--  for each user, suggest a list of users to follow (the followers of his followers)
+-  Who is the most influencer user (has the most followers)
+-  Who is the most active user (connected to lots of users)
+-  The mutual followers between 2 users
+-  For each user, suggest a list of users to follow (the followers of his followers)
 ###  8. Post Search 
-- given a specific word or topic, we can get the posts where this  word or topic was mentioned.
+- Given a specific word or topic, we can get the posts where this  word or topic was mentioned.
 ## Link for the Report, EXE file and The Illustration Video:
 
 
