@@ -34,4 +34,4 @@
 - given a specific word or topic, we can get the posts where this  word or topic was mentioned.
 ## Link for the Report, EXE file and The Illustration Video:
 
-## Contributors:
+
