@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MainFiles {
+public class MainFunc {
     private static Node result;
     private static final int DATA_RANGE = 256;
     private ArrayList<String>data;
@@ -10,7 +10,7 @@ public class MainFiles {
     private Stack<String> undo=new Stack<>();
     private Stack<String> redo=new Stack<>();
 
-    public MainFiles(ArrayList<String> data){
+    public MainFunc(ArrayList<String> data){
         this.data=data;
         this.StringData=ListToString(data);
         this.SavedData=ListToString(data);
